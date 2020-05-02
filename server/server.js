@@ -11,10 +11,10 @@ app.use(express.static('./public'));
 app.use('/product', product);
 
 //like route
-//app.use('/like', like);
+app.use('/like', like);
 
 //feedback route
-// app.use('/feedback', feedback);
+app.use('/feedback', feedback);
 
 app.get('/', (req, res) => {
 	res.status(200).send('OK get request');

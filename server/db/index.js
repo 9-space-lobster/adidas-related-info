@@ -1,10 +1,25 @@
-var mysql = require('mysql');
-var mysql_config = require('./mysql_config.js');
+const mysql = require('mysql');
+const mysql_config = require('./mysql_config.js');
+const Promise = require('bluebird');
 
-var connection = mysql.createConnection(mysql_config);
+const connection = mysql.createConnection(mysql_config);
+const db = Promise.promisifyAll(connection, { multiArgs: true });
+db.connect();
 
-var getProduct = function(){
+var getProduct = function(productId, callback){
+	Promise.all([
+		db.queryAsync(`select * from products where id = '${productId}' limit 1`),
+		db.queryAsync(`select toProductId from completeTheLook where fromProductId = '${productId}'`),
+		db.queryAsync(`select toProductId from relatedProducts where fromProductId = '${productId}' and relationType = 'ymal'`)
+	]).spread(([detail], [ctl], [ymal]) => {
+		if(ctl)
+			detail[0].ctl = ctl.map(c => c.toProductId);
 
+		if(ymal)
+			detail[0].ymal = ymal.map(y => y.toProductId);
+
+		callback(detail[0]);
+	})
 };
 
 module.exports.getProduct = getProduct;

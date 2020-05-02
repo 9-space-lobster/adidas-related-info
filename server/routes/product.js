@@ -6,8 +6,9 @@ router.get('/:productid', (req, res) => {
 	console.log('in product');
 
 	let productid = req.params.productid;
-
-	res.status(200).send(productid);
+	db.getProduct(productid, (results) => {
+		res.status(200).send(results);
+	});
 });
 
 module.exports = router;
