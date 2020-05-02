@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "nodemon server/server.js",
     "babel": "babel --watch client --out-dir public --presets=@babel/preset-react,@babel/preset-env",
     "webpack": "webpack -d --watch",
     "load-data": "mysql -u `cat mysql.user` -p`cat mysql.pass` < schema_data.sql && exit 0"

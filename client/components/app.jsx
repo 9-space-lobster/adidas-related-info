@@ -9,6 +9,8 @@ class App extends React.Component{
 	}
 
 	render(){
-		return (<div>react component</div>);
+		return (<div>react component!</div>);
 	}
-}
+};
+
+export default App;
