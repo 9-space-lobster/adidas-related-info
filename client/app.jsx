@@ -12,5 +12,3 @@ class App extends React.Component{
 		return (<div>react component</div>);
 	}
 }
-
-ReactDOM.render(<App />, document.getElementById('root'));
