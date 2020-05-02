@@ -1,2 +1,5 @@
 package-lock.json
-node_module/
+**/node_modules/**
+mysql.user
+mysql.pass
+db/mysql_config.js
