@@ -86,7 +86,7 @@ class ListContainer extends Component{
 		let cards = this.props.products.map(p => (<StyledProductCard selectItem={this.props.selectItem} index={index} key={index++} product={p} selectedIndex={this.props.selectedIndex}/>));
 
 		return (
-			<div class="list_container">
+			<div className="list_container">
 				{cards}
 			</div>
 		)
@@ -140,9 +140,7 @@ class DetailContainer extends Component{
 	}
 
 	selectSize(e){
-		console.log(e.target);
 		let index = e.target.getAttribute('index');
-		console.log(index);
 		let i = (index === this.state.selectedSizeIndex)? undefined : index;
 		this.setState({selectedSizeIndex: i, showSizeOption: false});
 	}
@@ -235,7 +233,7 @@ const AddToBagButton = ({className}) => (
 	<div className={className}>
 		<span>Add To Bag</span>
 		<svg>
-			<symbol id="arrow-right-long" viewBox="0 0 24 24"><path d="M17.59 7l5 5-5 5M0 12h22" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></path></symbol>
+			<symbol id="arrow-right-long" viewBox="0 0 24 24"><path d="M17.59 7l5 5-5 5M0 12h22" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="2"></path></symbol>
 			<use href="#arrow-right-long"></use>
 		</svg>
 	</div>
@@ -271,7 +269,7 @@ const SizeDropdown = ({className, sizes, showSizeOption, handleClick, selectSize
 	let lists = sizes.map( s => {
 		let selected = (selectedSizeIndex === index.toString())? 'menu-element selected': 'menu-element';
 		return (
-			<div onClick={selectSize} index={index++} className={selected} title={s} >{s}</div>
+			<div onClick={selectSize} key={index} index={index++} className={selected} title={s} >{s}</div>
 		);
 	} );
 
@@ -288,7 +286,7 @@ const SizeDropdown = ({className, sizes, showSizeOption, handleClick, selectSize
 			<button type="button" className="dropdown-select" title="Select size" onClick={handleClick}>
 				<span className="select-size-text">{label}</span>
 				<svg>
-					<symbol id="dropdown" viewBox="0 0 16 24"><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M1.5 9L8 15.5 14.5 9"></path></symbol>
+					<symbol id="dropdown" viewBox="0 0 16 24"><path fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="2" d="M1.5 9L8 15.5 14.5 9"></path></symbol>
 					<use href="#dropdown"></use>
 				</svg>
 			</button>
