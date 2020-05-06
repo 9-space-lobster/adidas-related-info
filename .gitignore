@@ -3,3 +3,4 @@ package-lock.json
 mysql.user
 mysql.pass
 db/mysql_config.js
+.DS_Store

@@ -1,5 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import styled from 'styled-components';
+import CompleteTheLook from './ctl.jsx';
+import ProductDetail from './detail.jsx';
+import YouMayAlsoLike from './ymal.jsx';
+import Feedback from './feedback.jsx';
 
 class App extends React.Component{
 	constructor(props){
@@ -9,8 +13,23 @@ class App extends React.Component{
 	}
 
 	render(){
-		return (<div>react component!</div>);
+		return (
+			<Container>
+				<CompleteTheLook />
+				<ProductDetail />
+				<YouMayAlsoLike />
+				<Feedback />
+			</Container>
+		);
 	}
 };
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: stretch;
+	border: solid;
+`;
 
 export default App;
