@@ -3,11 +3,11 @@ var path = require('path');
 
 module.exports = {
   entry: {
-    './public/app': path.resolve(__dirname, 'client/app.jsx'),
+    './public/app': path.resolve(__dirname, 'client/index.jsx'),
   },
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, './')
+    filename: 'app.bundle.js',
+    path: path.resolve(__dirname, './public')
   },
 
   module: {
