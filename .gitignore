@@ -2,5 +2,5 @@ package-lock.json
 **/node_modules/**
 mysql.user
 mysql.pass
-db/mysql_config.js
+server/db/mysql_config.js
 .DS_Store
