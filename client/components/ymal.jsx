@@ -1,33 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-
-const ymalMockData = [
-	{productId: 'EG4960', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/71d8a38f532442a6a31faae700d3e37c_9366/EG4960_00_plp_standard.jpg', title: 'Superstar Shoes', price: 80, href: 'https://www.adidas.com/us/superstar-shoes/EG4960.html'},
-	{productId: 'EG4957', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/d699a097bfb846298334aad80120f0f2_9366/EG4957_00_plp_standard.jpg', title: 'Superstar Shoes', price: 80, href: 'https://www.adidas.com/us/superstar-shoes/EG4957.html'},
-	{productId: 'FV2808', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/2654f10f58e045c2a029ab7d00db4040_9366/FV2808_00_plp_standard.jpg', title: 'Superstar Shoes', price: 100, href: 'https://www.adidas.com/us/superstar-shoes/FV2808.html'},
-	{productId: 'EG4960', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/71d8a38f532442a6a31faae700d3e37c_9366/EG4960_00_plp_standard.jpg', title: 'Superstar Shoes', price: 80, href: 'https://www.adidas.com/us/superstar-shoes/EG4960.html'},
-	{productId: 'EG4957', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/d699a097bfb846298334aad80120f0f2_9366/EG4957_00_plp_standard.jpg', title: 'Superstar Shoes', price: 80, href: 'https://www.adidas.com/us/superstar-shoes/EG4957.html'},
-	{productId: 'FV2808', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/2654f10f58e045c2a029ab7d00db4040_9366/FV2808_00_plp_standard.jpg', title: 'Superstar Shoes', price: 100, href: 'https://www.adidas.com/us/superstar-shoes/FV2808.html'},
-	{productId: 'EG4960', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/71d8a38f532442a6a31faae700d3e37c_9366/EG4960_00_plp_standard.jpg', title: 'Superstar Shoes', price: 80, href: 'https://www.adidas.com/us/superstar-shoes/EG4960.html'},
-	{productId: 'EG4957', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/d699a097bfb846298334aad80120f0f2_9366/EG4957_00_plp_standard.jpg', title: 'Superstar Shoes', price: 80, href: 'https://www.adidas.com/us/superstar-shoes/EG4957.html'},
-	{productId: 'FV2808', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/2654f10f58e045c2a029ab7d00db4040_9366/FV2808_00_plp_standard.jpg', title: 'Superstar Shoes', price: 100, href: 'https://www.adidas.com/us/superstar-shoes/FV2808.html'},
-	{productId: 'EG4960', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/71d8a38f532442a6a31faae700d3e37c_9366/EG4960_00_plp_standard.jpg', title: 'Superstar Shoes', price: 80, href: 'https://www.adidas.com/us/superstar-shoes/EG4960.html'},
-	{productId: 'EG4957', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/d699a097bfb846298334aad80120f0f2_9366/EG4957_00_plp_standard.jpg', title: 'Superstar Shoes', price: 80, href: 'https://www.adidas.com/us/superstar-shoes/EG4957.html'},
-	{productId: 'FV2808', image: 'https://assets.adidas.com/images/w_276,h_276,f_auto,q_auto:sensitive,fl_lossy/2654f10f58e045c2a029ab7d00db4040_9366/FV2808_00_plp_standard.jpg', title: 'Superstar Shoes', price: 100, href: 'https://www.adidas.com/us/superstar-shoes/FV2808.html'}
-];
+import { ymalBigMockData } from './__test__/mockdata.js';
 
 class YouMayAlsoLike extends React.Component{
 	constructor(props){
 		super(props);
 
-		this.state = {};
+		this.state = {
+			products: ymalBigMockData
+		};
 	}
 
 	render(){
 		return (
 			<SectionContainer>
 				<h5>you may also like</h5>
-				<StyledCarousel />
+				<StyledCarousel products={this.state.products}/>
 			</SectionContainer>
 		);
 	}
@@ -58,51 +46,56 @@ class Carousel extends React.Component{
 		super(props);
 
 		this.state = {
-			products: ymalMockData,
 			currentPage: 0
 		};
 
-		this.cardRef = [];
+		this.imageList = React.createRef();
 		this.cardPerPage = 4;
+		this.totalCards = this.props.products.length;
 
-		this.setCardRef = el => {
-			this.cardRef.push(el);
+		this.scrollToPage = (currentPage) => {
+			let el = this.imageList.current;
+			let w = el.offsetWidth;
+			el.scrollTo({left: w * currentPage, behavior: 'smooth'});
 		}
 
 		this.moveRight = () => {
+			let numberOfPage = Math.ceil(this.totalCards / this.cardPerPage);
 			let currentPage = this.state.currentPage + 1;
-			let totalCard = this.cardRef.length;
-			let card = currentPage * this.cardPerPage + 3;
-			if(card >= totalCard){
-				card = 0;
+
+			if(currentPage >= numberOfPage){
 				currentPage = 0;
 			}
 
-			this.cardRef[card].scroll();
-			this.setState({currentPage});
+			this.scrollToPage(currentPage);
 		}
 
 		this.moveLeft = () => {
+			let lastPage = Math.ceil(this.totalCards / this.cardPerPage) - 1;
 			let currentPage = this.state.currentPage - 1;
-			let card = currentPage * this.cardPerPage + 1;
-			let totalCard = this.cardRef.length;
-			let lastPage = Math.ceil(totalCard / this.cardPerPage) - 1;
-			if(card < 0){
-				card = totalCard - 1;
-				currentPage = lastPage;	
+			
+			if(currentPage < 0){
+				currentPage = lastPage;
 			}
 
-			this.cardRef[card].scroll();
-			this.setState({currentPage});
+			this.scrollToPage(currentPage);	
 		}
 
 		this.moveTo = (e) => {
 			let page = Number(e.target.getAttribute('page'));
-			let card = page * this.cardPerPage;
-			this.cardRef[card].scroll();
-			this.setState({currentPage: page});	
+			this.scrollToPage(page);
 		}
 
+		this.setCurrentPage = () => {
+			let el = this.imageList.current;
+			let w = el.offsetWidth;
+			let cardW = w / this.cardPerPage;	
+
+			//update currentPage once scroll pass the fist card for better UX
+			let currentPage = Math.ceil((el.scrollLeft - cardW) / w);
+
+			this.setState({currentPage});
+		}
 	}
 
 	render(){
@@ -110,7 +103,7 @@ class Carousel extends React.Component{
 		let pagination = [];
 		let productCards = [];
 
-		this.state.products.forEach( p => {	
+		this.props.products.forEach( p => {	
 			let snapStart = false;
 			if(index % this.cardPerPage === 0){
 				let isCurrentPage = (this.state.currentPage === Math.ceil(index / this.cardPerPage));
@@ -124,25 +117,25 @@ class Carousel extends React.Component{
 				snapStart = true;
 			}
 
-			productCards.push(<StyledProductCard ref={this.setCardRef} product={p} snapStart={snapStart} key={index} />);
+			productCards.push(<StyledProductCard product={p} snapStart={snapStart} key={index} />);
 			index++;
 		});
 
 		return (
 			<div className={this.props.className}>
-				<div className='image-list'>
+				<div ref={this.imageList} className='image-list' onScroll={this.setCurrentPage}>
 					{productCards}
 				</div>
 				<div className='pagination-button'>
 					<button onClick={this.moveLeft} className='left'>
 						<svg>
-							<symbol id="arrow-right" viewBox="0 0 10 24"><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M2 5.5L8.5 12 2 18.5"></path></symbol>
+							<symbol id="arrow-right" viewBox="0 0 10 24"><path fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="2" d="M2 5.5L8.5 12 2 18.5"></path></symbol>
 							<use href="#arrow-right"></use>
 						</svg>							
 					</button>
-					<button onClick={this.moveRight.bind(this)} className='right'>
+					<button onClick={this.moveRight} className='right'>
 						<svg>
-							<symbol id="arrow-right" viewBox="0 0 10 24"><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M2 5.5L8.5 12 2 18.5"></path></symbol>
+							<symbol id="arrow-right" viewBox="0 0 10 24"><path fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="2" d="M2 5.5L8.5 12 2 18.5"></path></symbol>
 							<use href="#arrow-right"></use>
 						</svg>							
 					</button>
@@ -183,10 +176,20 @@ const StyledCarousel = styled(Carousel)`
 			background-color: hsla(0,0%,100%,.7);
 			cursor: pointer;
 			position: relative;
+			border: none;
 
 			svg{
 				width: 100%;
 				height: 100%;
+			}
+
+			&:hover{
+				background-color: #000;
+				color: #fff;
+			}
+
+			&:focus{
+				outline: none;
 			}
 		}
 
@@ -199,7 +202,7 @@ const StyledCarousel = styled(Carousel)`
 		}
 
 		.right{
-			right: 2px;
+			right: 1px;
 		}
 	}
 
@@ -232,24 +235,19 @@ class ProductCard extends React.Component{
 		super(props);
 
 		this.state = {};
-
-		this.cardRef = React.createRef();
-	}
-
-	scroll(){
-		this.cardRef.current.scrollIntoView({behavior: "smooth"});
 	}
 
 	render(){
 		let product = this.props.product;
+		let like = product.liked ? '#wishlist-active' : '#wishlist-inactive';
 
 		return (
-			<div ref={this.cardRef} className={this.props.className}>
+			<div className={this.props.className}>
 				<div className='heart-icon'>
 					<svg>
-						<symbol id="wishlist-inactive" viewBox="0 0 20 24"><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M7.38 6H4.42L2 10l8 8 8-8-2.41-4h-2.98L10 9 7.38 6z"></path></symbol>
-						<symbol id="wishlist-active" viewBox="0 0 20 24"><path fill="currentColor" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M7.38 6H4.42L2 10l8 8 8-8-2.41-4h-2.98L10 9 7.38 6z"></path></symbol>
-						<use href='#wishlist-inactive'/>
+						<symbol id="wishlist-inactive" viewBox="0 0 20 24"><path fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="2" d="M7.38 6H4.42L2 10l8 8 8-8-2.41-4h-2.98L10 9 7.38 6z"></path></symbol>
+						<symbol id="wishlist-active" viewBox="0 0 20 24"><path fill="currentColor" stroke="currentColor" strokeMiterlimit="10" strokeWidth="2" d="M7.38 6H4.42L2 10l8 8 8-8-2.41-4h-2.98L10 9 7.38 6z"></path></symbol>
+						<use href={like}/>
 					</svg>
 				</div>
 				<a href={product.href}>
@@ -270,7 +268,6 @@ const StyledProductCard = styled(ProductCard)`
 	margin-right: 1%;
 	border: 1px solid transparent;
 	min-height: 330px;
-	scroll-snap-stop: always;
 
 	${
 		props => (props.snapStart) ? "scroll-snap-align: start;" : ""
@@ -286,6 +283,7 @@ const StyledProductCard = styled(ProductCard)`
 		top: 16px;
 		width: 24px;
 		height: 24px;
+		cursor: pointer;
 
 		svg {
 			width: 100%;
@@ -321,4 +319,4 @@ const StyledProductCard = styled(ProductCard)`
 	}
 `;
 
-export default YouMayAlsoLike;
+export { YouMayAlsoLike, StyledCarousel, StyledProductCard };
