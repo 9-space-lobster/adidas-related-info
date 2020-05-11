@@ -15,10 +15,8 @@ class App extends React.Component{
 	render(){
 		return (
 			<Container>
-				<CompleteTheLook />
-				<ProductDetail />
+        <CompleteTheLook />
 				<YouMayAlsoLike />
-				<Feedback />
 			</Container>
 		);
 	}

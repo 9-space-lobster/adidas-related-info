@@ -4,6 +4,7 @@ const product = require('./routes/product');
 const like = require('./routes/like');
 const feedback = require('./routes/feedback');
 const app = express();
+const PORT = process.env.INFO_SERVICE_PORT || 3002;
 
 app.use(express.static('./public'));
 
@@ -20,4 +21,4 @@ app.get('/', (req, res) => {
 	res.status(200).send('OK get request');
 })
 
-app.listen(3000);
+app.listen(PORT);
