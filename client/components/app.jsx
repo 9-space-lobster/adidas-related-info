@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CompleteTheLook from './ctl.jsx';
 import ProductDetail from './detail.jsx';
-import YouMayAlsoLike from './ymal.jsx';
+import { YouMayAlsoLike } from './ymal.jsx';
 import Feedback from './feedback.jsx';
 
 class App extends React.Component{
