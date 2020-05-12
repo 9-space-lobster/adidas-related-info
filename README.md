@@ -9,3 +9,7 @@ Setup
 Seed Data
 ---------
 1. run ```npm run seed```
+
+Start server
+------------
+1. run ```npm start```
