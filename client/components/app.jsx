@@ -27,7 +27,6 @@ const Container = styled.div`
 	flex-direction: column;
 	justify-content: flex-end;
 	align-items: stretch;
-	border: solid;
 `;
 
 export default App;
