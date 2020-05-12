@@ -7,3 +7,4 @@ mysql.pass
 server/db/mysql_config.js
 .DS_Store
 .jest.config.js.swp
+app.bundle.js
