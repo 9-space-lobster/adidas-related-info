@@ -1,3 +1,3 @@
 #! /bin/bash
 
-docker stop reviews-module_reviews adminer mysql
+docker stop reviews-module_reviews_1 adminer mysql
