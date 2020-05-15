@@ -4,9 +4,9 @@ const Promise = require('bluebird');
 
 const connection = mysql.createConnection(mysql_config);
 const db = Promise.promisifyAll(connection, { multiArgs: true });
-db.connect();
 
 var getProduct = function(productId, callback){
+  db.connect();
 	Promise.all([
 		db.queryAsync(`select * from products where id = '${productId}' limit 1`),
 		db.queryAsync(`select toProductId from completeTheLook where fromProductId = '${productId}'`),
