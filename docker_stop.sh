@@ -1,3 +1,3 @@
 #! /bin/bash
 
-docker stop reviews-module_reviews_1 adminer mysql
+docker stop adidas-related-info_related_info_1 adidas-related-info_mysql_1 
