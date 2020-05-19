@@ -154,6 +154,7 @@ const StyledCarousel = styled(Carousel)`
 	.image-list{
 		display: flex;
 		overflow-x: auto;
+    overscroll-behavior-x: none;
 		overflow-y: hidden;
 		scroll-snap-type: x mandatory;
 		-ms-overflow-style: none;
