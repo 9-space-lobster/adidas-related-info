@@ -18,8 +18,5 @@ services:
       MYSQL_DATABASE: adidas
     volumes:
       - type: bind
-        source: ./data
-        target: /docker-entrypoint-initdb.d/
-      - type: bind
         source: ./seed
         target: /seed
